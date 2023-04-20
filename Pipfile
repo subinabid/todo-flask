@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 flask = "*"
+pytest = "*"
+coverage = "*"
+flask-sqlalchemy = "*"
 
 [dev-packages]
 
