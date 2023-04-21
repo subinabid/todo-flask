@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block header %}
+<h1>{% block title %}Todo{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+{% if session['user'] %} Hello {{session['user']}} {% endif %}
+{% endblock %}
