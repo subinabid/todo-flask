@@ -9,8 +9,9 @@
 </head>
 
 <body>
-    {% for user in users %}
-    {{user}}
+    <h1>Task list - Unfiltered</h1>
+    {% for task in tasks %}
+    {{task.task}} <br>
     {% endfor %}
 </body>
 

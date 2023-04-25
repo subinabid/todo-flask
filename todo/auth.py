@@ -11,23 +11,21 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        error = None
 
         if not username:
-            error = "Username is required"
-        elif not password:
-            error = "Password is missing"
+            flash("Username is required")
 
-        if error is None:
+        elif not password:
+            flash("Password is missing")
+
+        else:
             try:
                 u = User(username=username, password=generate_password_hash(password))
                 db.session.add(u)
                 db.session.commit()
 
             except:
-                error = "Database Error"
-
-        flash(error)
+                flash("Database Error")
 
     return render_template("auth/register.html")
 
@@ -38,22 +36,18 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        error = None
         user = db.session.get(User, username)
 
         if user is None:
-            error = "User not found"
+            flash("User not found")
 
         elif not check_password_hash(user.password, password):
-            error = "Incorrect Password"
+            flash("Incorrect Password")
 
         else:
             session.clear()
             session["user"] = user.username
             return redirect(url_for("urls.index"))
-
-        if error is not None:
-            flash(error)
 
     return render_template("auth/login.html")
 

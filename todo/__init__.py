@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 from todo.models import db
-from todo import auth, urls
+from todo import auth, urls, tasks
 
 
 def create_app():
@@ -23,5 +23,6 @@ def create_app():
     # Register Blueprints
     app.register_blueprint(auth.bp)
     app.register_blueprint(urls.bp)
+    app.register_blueprint(tasks.bp)
 
     return app

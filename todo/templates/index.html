@@ -6,4 +6,6 @@
 
 {% block content %}
 {% if session['user'] %} Hello {{session['user']}} {% endif %}
+<br>
+{% for task in tasks %} {{task.task}} <br>{% endfor %}
 {% endblock %}
