@@ -6,7 +6,7 @@ db = SQLAlchemy()
 class User(db.Model):
     username = db.Column(db.String, unique=True, nullable=False, primary_key=True)
     password = db.Column(db.String, nullable=False)
-    tasks = db.relationship("Task", backref="user")
+    tasks = db.relationship("Task", backref="user", lazy="dynamic")
 
 
 class Task(db.Model):
