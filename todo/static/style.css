@@ -353,3 +353,8 @@ section {
 .section-title p {
   margin-bottom: 0;
 }
+
+#user-form {
+  width: 40%;
+  margin: auto;
+}
