@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
+{% block l1 %}active{% endblock %}
+
 {% block header %}
-{% if session['user'] %} <h2>Hello {{session['user']}}</h2> <br> {% endif %}
+{% if session['user'] %} <h2>Hello {{session['user']}} | Planned tasks</h2> <br> {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -9,7 +11,7 @@
     <thead>
         <tr>
             <th>Sl</th>
-            <th>Close</th>
+            <th>Status</th>
             <th>Task</th>
             <th>Target</th>
             <th>Control</th>
@@ -19,16 +21,16 @@
         {% for task in tasks %}
         <tr>
             <td>{{loop.index}}</td>
-            <td><a href="/task/close/{{task.id}}"><i class="bx bx-check"></i></a></td>
+            <td><input type="checkbox" data-id="{{task.id}}"></td>
+            <!-- <td><a href="/task/close/{{task.id}}"><i class="bx bx-check"></i></a></td> -->
             <td>{{task.task}}</td>
             <td>{{task.target_date.strftime('%d/%m/%Y')}}</td>
-            <td> <a href="/task/edit/{{task.id}}"><i class="bx bx-edit-alt"></i></a> | <a
-                    href="/task/delete/{{task.id}}"><i class='bx bx-task-x'></i></a> </td>
+            <td> <a href="/task/edit/{{task.id}}"><i class="bx bx-edit-alt" title="Edit"></i></a> | <a
+                    href="/task/delete/{{task.id}}"><i class='bx bx-task-x' title="Delete"></i></a> </td>
         </tr>
-
         {% endfor %}
-
     </tbody>
 </table>
+{% for message in get_flashed_messages() %} {{message}} {% endfor %}
 
 {% endblock %}
