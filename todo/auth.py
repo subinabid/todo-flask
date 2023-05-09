@@ -2,11 +2,11 @@ from flask import Blueprint, render_template, request, session, flash, redirect,
 from werkzeug.security import check_password_hash, generate_password_hash
 from todo.models import db, User
 
-bp = Blueprint("auth", __name__, url_prefix="/auth")
+app = Blueprint("auth", __name__, url_prefix="/auth")
 
 
 # Register a user
-@bp.route("/register", methods=("GET", "POST"))
+@app.route("/register", methods=("GET", "POST"))
 def register():
     if request.method == "POST":
         username = request.form["username"]
@@ -24,14 +24,14 @@ def register():
                 db.session.add(u)
                 db.session.commit()
 
-            except:
-                flash("Database Error")
+            except Exception:
+                flash("Some Error")
 
     return render_template("auth/register.html")
 
 
 # Login
-@bp.route("/login", methods=("GET", "POST"))
+@app.route("/login", methods=("GET", "POST"))
 def login():
     if request.method == "POST":
         username = request.form["username"]
@@ -53,7 +53,7 @@ def login():
 
 
 # Logout
-@bp.route("/logout")
+@app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("urls.index"))

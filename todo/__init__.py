@@ -21,8 +21,8 @@ def create_app():
     db.init_app(app)
 
     # Register Blueprints
-    app.register_blueprint(auth.bp)
-    app.register_blueprint(urls.bp)
-    app.register_blueprint(tasks.bp)
+    app.register_blueprint(auth.app)
+    app.register_blueprint(urls.app)
+    app.register_blueprint(tasks.app)
 
     return app

@@ -1,14 +1,14 @@
-from flask import Blueprint, request, render_template, session, flash
+from flask import Blueprint, request, render_template, session, flash, redirect
 from todo.models import db, User, Task
 from datetime import date
 from datetime import datetime
 
-bp = Blueprint("task", __name__, url_prefix="/task")
+app = Blueprint("task", __name__, url_prefix="/task")
 
 
 # Add a task
 # Needs login_required decorator
-@bp.route("/add", methods=("GET", "POST"))
+@app.route("/add", methods=("GET", "POST"))
 def task_add():
     if request.method == "POST":
         error = None
@@ -37,3 +37,27 @@ def task_add():
             flash(error)
 
     return render_template("tasks/add.html")
+
+
+# Mark a task as closed
+@app.route("<int:id>", methods=["POST"])
+def update(id, body):
+    t = db.get_or_404(Task, id)
+    j = JSON.parse(body)
+    t.complete = j.complete
+    db.session.commit()
+
+    flash(f"Task {t.task} is completed")
+    return redirect("/")
+
+
+# List of completed tasks
+@app.route("/completed")
+def task_completed():
+    if session.get("user") is not None:
+        user = User.query.filter_by(username=session["user"]).first()
+        tasks = user.tasks.filter_by(complete=True)
+        return render_template("completed.html", tasks=tasks)
+
+    flash("Unknown Error")
+    return redirect("/")
