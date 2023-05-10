@@ -2,10 +2,10 @@
   "use strict";
 
   const onClick = async (e) => {
-    console.log(e.target.checked, e.target.dataset.id);
     const url = `tasks/${e.target.dataset.id}`;
     const resp = await fetch(url, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ completed: e.target.checked }),
     });
   };

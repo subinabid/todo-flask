@@ -37,15 +37,15 @@
         <li><a href="/" class="nav-link scrollto {% block l1 %}{% endblock %}"><i class="bx bx-home"></i>
             <span>Home</span></a></li>
         {% if session['user'] %}
-        <li><a href="/auth/logout" class="nav-link scrollto"><i class="bx bx-user"></i>
+        <li><a href="{{url_for('auth.logout')}}" class="nav-link scrollto"><i class="bx bx-user"></i>
             <span>Logout</span></a></li>
         {% else %}
-        <li><a href="/auth/login" class="nav-link scrollto {% block l2 %}{% endblock %}"><i class="bx bx-user"></i>
+        <li><a href="{{url_for('auth.login')}}" class="nav-link scrollto {% block l2 %}{% endblock %}"><i class="bx bx-user"></i>
             <span>Login / Register</span></a></li>
         {% endif %}
-        <li><a href="/task/add" class="nav-link scrollto {% block l3 %}{% endblock %}"><i class="bx bx-file-blank"></i>
+        <li><a href="{{url_for('task.add')}}" class="nav-link scrollto {% block l3 %}{% endblock %}"><i class="bx bx-file-blank"></i>
             <span>Task</span></a></li>
-        <li><a href="/task/completed" class="nav-link scrollto {% block l4 %}{% endblock %}"><i
+        <li><a href="{{url_for('task.completed')}}" class="nav-link scrollto {% block l4 %}{% endblock %}"><i
               class="bx bx-archive"></i> <span>Completed
               tasks</span></a></li>
       </ul>

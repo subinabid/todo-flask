@@ -3,13 +3,13 @@ from todo.models import db, User, Task
 from datetime import date
 from datetime import datetime
 
-app = Blueprint("task", __name__, url_prefix="/task")
+app = Blueprint("task", __name__, url_prefix="/tasks")
 
 
 # Add a task
 # Needs login_required decorator
 @app.route("/add", methods=("GET", "POST"))
-def task_add():
+def add():
     if request.method == "POST":
         error = None
         task_text = request.form["task"]
@@ -41,19 +41,17 @@ def task_add():
 
 # Mark a task as closed
 @app.route("<int:id>", methods=["POST"])
-def update(id, body):
+def update(id):
     t = db.get_or_404(Task, id)
-    j = JSON.parse(body)
-    t.complete = j.complete
+    t.complete = request.json["completed"]
     db.session.commit()
 
-    flash(f"Task {t.task} is completed")
     return redirect("/")
 
 
 # List of completed tasks
 @app.route("/completed")
-def task_completed():
+def completed():
     if session.get("user") is not None:
         user = User.query.filter_by(username=session["user"]).first()
         tasks = user.tasks.filter_by(complete=True)

@@ -21,7 +21,7 @@
         {% for task in tasks %}
         <tr>
             <td>{{loop.index}}</td>
-            <td><input type="checkbox" data-id="{{task.id}}"></td>
+            <td><input type="checkbox" data-id="{{task.id}}" {% if task.complete %} checked {% endif %}></td>
             <!-- <td><a href="/task/close/{{task.id}}"><i class="bx bx-check"></i></a></td> -->
             <td>{{task.task}}</td>
             <td>{{task.target_date.strftime('%d/%m/%Y')}}</td>
