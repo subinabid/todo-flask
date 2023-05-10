@@ -15,3 +15,4 @@ class Task(db.Model):
     task = db.Column(db.String, nullable=False)
     target_date = db.Column(db.Date)
     complete = db.Column(db.Boolean, default=False)
+    archive = db.Column(db.Boolean, default=False)

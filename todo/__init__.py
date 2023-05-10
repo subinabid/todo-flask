@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_migrate import Migrate
 from todo.models import db
 from todo import auth, urls, tasks
 
@@ -19,6 +20,9 @@ def create_app():
 
     # Use the Database
     db.init_app(app)
+
+    # Enable database migrations
+    migrate = Migrate(app, db)
 
     # Register Blueprints
     app.register_blueprint(auth.app)
