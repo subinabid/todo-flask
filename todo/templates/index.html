@@ -22,15 +22,31 @@
         <tr>
             <td>{{loop.index}}</td>
             <td><input type="checkbox" data-id="{{task.id}}" {% if task.complete %} checked {% endif %}></td>
-            <!-- <td><a href="/task/close/{{task.id}}"><i class="bx bx-check"></i></a></td> -->
-            <td>{{task.task}}</td>
-            <td>{{task.target_date.strftime('%d/%m/%Y')}}</td>
-            <td> <a href="/task/edit/{{task.id}}"><i class="bx bx-edit-alt" title="Edit"></i></a> | <a
-                    href="/task/delete/{{task.id}}"><i class='bx bx-task-x' title="Delete"></i></a> </td>
+            <td><input type="text" data-id="{{task.id}}" id="tt-{{task.id}}" value="{{task.task}}" readonly class="form-control ne-text"></td>
+            <!-- replace above class with form-control-plaintext -->
+            <td><input type="date" data-id="{{task.id}}" id="td-{{task.id}}" value="{{task.target_date}}" readonly class="form-control ne-text"></td>
+            <!-- <td><input type="date" name="" id="" value="{{task.target_date.strftime('%d/%m/%Y')}}"></td> -->
+            <td> 
+                <!-- <div role="button" class="task-control"><i data-id="{{task.id}}" class="bx bx-edit-alt tc-edit"></i></div> |  -->
+                <div role="button" class="task-control"><i data-id="{{task.id}}" class="bx bx-task-x tc-del"></i></div> | 
+                <!-- <a href="/task/{{task.id}}/delete" title="Delete"><i class='bx bx-task-x'></i></a> | -->
+                <a href="/tasks/{{task.id}}/archive" title="Archive"><i class='bx bx-archive'></i></a> 
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+<form action="{{ url_for('task.add') }}" method="post">
+    <div class="row">
+        <div class="col"><h4>Add a new task</h4></div>
+        <div class="col"><input type="text" name="task" placeholder="Task" required  class="form-control"></div>
+        <div class="col"><input type="date" name="target_date" class="form-control"></div>
+        <div class="col"><button type="submit" class="btn btn-primary">Add task</button></div>
+    </div>
+    
+    
+    
+</form>
 {% for message in get_flashed_messages() %} {{message}} {% endfor %}
 
 {% endblock %}

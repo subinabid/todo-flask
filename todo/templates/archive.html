@@ -3,7 +3,7 @@
 {% block l4 %}active{% endblock %}
 
 {% block header %}
-{% if session['user'] %} <h2>Hello {{session['user']}} | Completed tasks</h2> <br> {% endif %}
+{% if session['user'] %} <h2>Hello {{session['user']}} | Archived tasks</h2> <br> {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -13,6 +13,7 @@
             <th>Sl</th>
             <th>Task</th>
             <th>Target</th>
+            <th>Unarchive</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +22,7 @@
             <td>{{loop.index}}</td>
             <td>{{task.task}}</td>
             <td>{{task.target_date.strftime('%d/%m/%Y')}}</td>
+            <td><a href="{{task.id}}/unarchive"><i class='bx bx-archive'></i></a></td>
         </tr>
         {% endfor %}
     </tbody>

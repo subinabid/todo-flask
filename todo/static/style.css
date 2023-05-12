@@ -354,7 +354,22 @@ section {
   margin-bottom: 0;
 }
 
+/*--------------------------------------------------------------
+# External
+--------------------------------------------------------------*/
+
 #user-form {
   width: 40%;
   margin: auto;
+}
+
+.ne-text {
+  background-color:transparent !important;
+  border: none !important;
+}
+
+.task-control {
+  display: inline;
+  color: #0563bb;
+  text-decoration: none;
 }

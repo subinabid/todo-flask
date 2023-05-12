@@ -9,7 +9,7 @@ app = Blueprint("urls", __name__)
 def index():
     if session.get("user") is not None:
         user = User.query.filter_by(username=session["user"]).first()
-        tasks = user.tasks
+        tasks = user.tasks.filter_by(archive=False)
         return render_template("index.html", tasks=tasks)
 
     return render_template("index.html")
