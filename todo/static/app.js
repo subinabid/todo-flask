@@ -1,6 +1,7 @@
 (function () {
   "use strict";
 
+  // Update a task as completed
   const onClick = async (e) => {
     const url = `tasks/${e.target.dataset.id}`;
     const resp = await fetch(url, {
@@ -10,16 +11,8 @@
     });
   };
 
-  const onClickEdit = (e) => {
-    const tid = e.target.dataset.id;
-    const t = document.getElementById("tt-" + tid);
-    t.readOnly = false;
-    t.classList.remove("ne-text");
-    const d = document.getElementById("td-" + tid);
-    d.readOnly = false;
-    d.classList.remove("ne-text");
-  };
-
+  // Delete a task
+  // Add a confirmation message?
   const onClickDel = async (e) => {
     const url = `tasks/${e.target.dataset.id}`;
     const resp = await fetch(url, {
@@ -28,6 +21,7 @@
     window.location.href = "/";
   };
 
+  // Update task date
   const onDateChange = async (e) => {
     const url = `tasks/${e.target.dataset.id}/changedate`;
     const resp = await fetch(url, {
@@ -39,6 +33,7 @@
     e.target.classList.add("ne-text");
   };
 
+  // Update task description
   const onTaskChange = async (e) => {
     const url = `tasks/${e.target.dataset.id}/changetask`;
     const resp = await fetch(url, {
@@ -50,25 +45,26 @@
     e.target.classList.add("ne-text");
   };
 
+  // Make an item editable
   const makeEditable = (e) => {
-    console.log("Dbl clicked");
     e.target.readOnly = false;
     e.target.classList.remove("ne-text");
   };
 
+  const makeEditableOnEnter = (e) => {
+    if (e.key === "Enter") {
+      makeEditable(e);
+    }
+  };
+
   const app = () => {
     let checks = document.querySelectorAll("input[type=checkbox]");
-    let edits = document.querySelectorAll("i.tc-edit");
     let deletes = document.querySelectorAll("i.tc-del");
     let dates = document.querySelectorAll("input[type=date]");
     let texts = document.querySelectorAll("input[type=text]");
 
     for (const box of checks) {
       box.addEventListener("click", onClick);
-    }
-
-    for (const edit of edits) {
-      edit.addEventListener("click", onClickEdit);
     }
 
     for (const del of deletes) {
@@ -82,6 +78,7 @@
     for (const task of texts) {
       task.addEventListener("change", onTaskChange);
       task.addEventListener("dblclick", makeEditable);
+      task.addEventListener("keypress", makeEditableOnEnter);
     }
   };
 

@@ -25,11 +25,8 @@
             <td><input type="text" data-id="{{task.id}}" id="tt-{{task.id}}" value="{{task.task}}" readonly class="form-control ne-text"></td>
             <!-- replace above class with form-control-plaintext -->
             <td><input type="date" data-id="{{task.id}}" id="td-{{task.id}}" value="{{task.target_date}}" readonly class="form-control ne-text"></td>
-            <!-- <td><input type="date" name="" id="" value="{{task.target_date.strftime('%d/%m/%Y')}}"></td> -->
             <td> 
-                <!-- <div role="button" class="task-control"><i data-id="{{task.id}}" class="bx bx-edit-alt tc-edit"></i></div> |  -->
                 <div role="button" class="task-control"><i data-id="{{task.id}}" class="bx bx-task-x tc-del"></i></div> | 
-                <!-- <a href="/task/{{task.id}}/delete" title="Delete"><i class='bx bx-task-x'></i></a> | -->
                 <a href="/tasks/{{task.id}}/archive" title="Archive"><i class='bx bx-archive'></i></a> 
             </td>
         </tr>
@@ -48,5 +45,4 @@
     
 </form>
 {% for message in get_flashed_messages() %} {{message}} {% endfor %}
-
 {% endblock %}

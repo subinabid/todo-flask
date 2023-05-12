@@ -87,7 +87,7 @@ def archive(id):
     return redirect("/")
 
 
-# Unrchive a task
+# Unarchive a task
 @app.route("<int:id>/unarchive")
 def unarchive(id):
     t = db.get_or_404(Task, id)
