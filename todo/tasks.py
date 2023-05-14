@@ -36,14 +36,22 @@ def add():
     return redirect("/")
 
 
-# Mark a task as closed
+# Update a task
 @app.route("<int:id>", methods=["POST"])
 def update(id):
-    t = db.get_or_404(Task, id)
-    t.complete = request.json["completed"]
-    db.session.commit()
+    if request.json:
+        t = db.get_or_404(Task, id)
+        t.task = request.json.get("task", t.task)
+        t.target_date = datetime.strptime(
+            request.json.get("date", str(t.target_date)), "%Y-%m-%d"
+        )
+        t.complete = request.json.get("completed", t.complete)
+        t.archive = request.json.get("archive", t.archive)
+        db.session.commit()
+        return "OK"
 
-    return redirect("/")
+    else:
+        return "No data received"
 
 
 # Delete a task
@@ -56,48 +64,7 @@ def delete(id):
     return redirect("/")
 
 
-# Update task text
-@app.route("<int:id>/changetask", methods=["POST"])
-def update_text(id):
-    t = db.get_or_404(Task, id)
-    t.task = request.json["task"]
-    db.session.commit()
-
-    return redirect("/")
-
-
-# Update Task date
-@app.route("<int:id>/changedate", methods=["POST"])
-def update_date(id):
-    t = db.get_or_404(Task, id)
-    t.target_date = datetime.strptime(request.json["date"], "%Y-%m-%d")
-    db.session.commit()
-
-    return redirect("/")
-
-
-# Archive a task
-# Why am I not reusing the above API?
-@app.route("<int:id>/archive")
-def archive(id):
-    t = db.get_or_404(Task, id)
-    t.archive = True
-    db.session.commit()
-
-    return redirect("/")
-
-
-# Unarchive a task
-@app.route("<int:id>/unarchive")
-def unarchive(id):
-    t = db.get_or_404(Task, id)
-    t.archive = False
-    db.session.commit()
-
-    return redirect(url_for("task.archives"))
-
-
-# List of completed tasks
+# List of achived tasks
 @app.route("/archives")
 def archives():
     if session.get("user") is not None:

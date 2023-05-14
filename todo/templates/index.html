@@ -27,7 +27,7 @@
             <td><input type="date" data-id="{{task.id}}" id="td-{{task.id}}" value="{{task.target_date}}" readonly class="form-control ne-text"></td>
             <td> 
                 <div role="button" class="task-control"><i data-id="{{task.id}}" class="bx bx-task-x tc-del"></i></div> | 
-                <a href="/tasks/{{task.id}}/archive" title="Archive"><i class='bx bx-archive'></i></a> 
+                <div role="button" class="task-control"><i data-id="{{task.id}}" class="bx bx-archive tc-archive"></i></div>
             </td>
         </tr>
         {% endfor %}
