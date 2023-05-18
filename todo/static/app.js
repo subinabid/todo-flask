@@ -15,12 +15,17 @@
 
     // Update a task as completed
     const onClickComplete = async (e) => {
+        let formData = new FormData();
+        formData.append("completed", e.target.checked);
+
         const url = `tasks/${e.target.dataset.id}`;
-        const resp = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ completed: e.target.checked }),
-        });
+        const resp = await fetch(url, { method: "POST", body: formData });
+        if (resp.status == 200) {
+            const body = await resp.json();
+            console.log("Got resp", body, body.complete);
+        } else {
+            alert("Something went wrong");
+        }
     };
 
     // Update task description
