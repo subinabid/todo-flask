@@ -61,19 +61,17 @@ def add():
 # Update a task
 @app.route("<int:id>", methods=["POST"])
 def update(id):
-    if request.json:
-        t = db.get_or_404(Task, id)
-        t.task = request.json.get("task", t.task)
-        t.target_date = datetime.strptime(
-            request.json.get("date", str(t.target_date)), "%Y-%m-%d"
-        )
-        t.complete = request.json.get("completed", t.complete)
-        t.archive = request.json.get("archive", t.archive)
-        db.session.commit()
-        return "OK"
+    t = db.get_or_404(Task, id)
+    t.task = request.form.get("task", t.task)
+    t.target_date = datetime.strptime(
+        request.form.get("date", str(t.target_date)), "%Y-%m-%d"
+    )
+    t.complete = parse_boolean(request.form.get("completed", t.complete))
+    t.archive = parse_boolean(request.form.get("archive", t.archive))
 
-    else:
-        return "No data received"
+    db.session.commit()
+    t = db.get_or_404(Task, id)
+    return jsonify(t.to_dict())
 
 
 # Delete a task
@@ -96,3 +94,15 @@ def archives():
 
     flash("Unknown Error")
     return redirect("/")
+
+
+def parse_boolean(val):
+    match val:
+        case bool():
+            return val
+        case "true":
+            return True
+        case "false":
+            return False
+        case _:
+            return abort(400)
