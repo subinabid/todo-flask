@@ -16,3 +16,6 @@ class Task(db.Model):
     target_date = db.Column(db.Date)
     complete = db.Column(db.Boolean, default=False)
     archive = db.Column(db.Boolean, default=False)
+
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
