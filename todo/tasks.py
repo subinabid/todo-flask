@@ -1,9 +1,31 @@
-from flask import Blueprint, request, render_template, session, flash, redirect, url_for
+from flask import (
+    Blueprint,
+    abort,
+    request,
+    render_template,
+    session,
+    flash,
+    redirect,
+)
+from flask import jsonify
 from todo.models import db, User, Task
 from datetime import date
 from datetime import datetime
 
 app = Blueprint("task", __name__, url_prefix="/tasks")
+
+
+@app.route("/", methods=["GET"])
+def index():
+    tasks = db.session.execute(db.select(Task).filter_by(archive=False)).scalars()
+    dicts = [task.to_dict() for task in tasks]
+    return jsonify(dicts)
+
+
+@app.route("/<int:id>", methods=["GET"])
+def get(id):
+    t = db.get_or_404(Task, id)
+    return jsonify(t.to_dict())
 
 
 # Add a task
