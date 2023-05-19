@@ -1,19 +1,17 @@
-# SQL Alchemy usage
+# Todo App
 
-## installation
-```pip install Flask-SQLAlchemy```
+## Installation
 
+    $ pipenv install
 
-## Usage
-- create models.py
-- import SQLAlchemy ```from flask_sqlalchemy import SQLAlchemy```
-- create a db instance ```db = SQLAlchemy()```
-- create models inheriting ```db.Model```
+## First time setup
 
+    $ flask app todo shell
+    >> from todo.models import db
+    >>db.create_all()
 
-## Initiate database (From Terminal)
-- ```Flask --app appname shell ```
-- ```from appname.models import db  ```
-- ```db.create_all() ```
-### Note:
-- This cannot handle migrations
+    migrations?
+
+## Run the app
+
+    $ flask app todo run --debug
